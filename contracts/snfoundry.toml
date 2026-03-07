@@ -1,0 +1,3 @@
+[snforge]
+exit_first = false
+fuzzer_runs = 32

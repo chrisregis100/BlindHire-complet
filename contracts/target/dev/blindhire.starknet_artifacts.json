@@ -1,0 +1,1 @@
+{"version":1,"contracts":[{"id":"9mgko0ck2p6s0","package_name":"blindhire","contract_name":"BlindHire","module_path":"blindhire::blindhire::BlindHire","artifacts":{"sierra":"blindhire_BlindHire.contract_class.json","casm":null}}]}
