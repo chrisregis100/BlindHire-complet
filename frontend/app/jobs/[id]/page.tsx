@@ -340,8 +340,8 @@ export default function JobDetailPage() {
             <p className="mb-6 text-sm text-muted-foreground">
               Click below to finalize the auction. The lowest valid confirmed offer wins.
             </p>
-            <PrimaryButton onClick={handleFinalize} disabled={blindHire.isLoading}>
-              {blindHire.isLoading ? "Processing…" : "Finalize Auction"}
+            <PrimaryButton onClick={handleFinalize} >
+             "Finalize Auction"
             </PrimaryButton>
           </div>
         )}
