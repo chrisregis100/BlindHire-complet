@@ -1,0 +1,91 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-sans: var(--font-inter), system-ui, sans-serif;
+
+  --color-background: var(--bg);
+  --color-foreground: var(--fg);
+  --color-surface: var(--surface);
+  --color-surface-hover: var(--surface-hover);
+  --color-border: var(--border);
+  --color-border-hover: var(--border-hover);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-fg);
+  
+  /* Define primary colors directly so Tailwind can apply opacity modifiers (e.g. bg-primary/10) */
+  --color-primary: #6366f1;
+  --color-primary-hover: #4f46e5;
+}
+
+:root {
+  --bg: #f8fafc;
+  --fg: #0f172a;
+  --surface: #ffffff;
+  --surface-hover: #f1f5f9;
+  --border: #e2e8f0;
+  --border-hover: #cbd5e1;
+  --muted: #f1f5f9;
+  --muted-fg: #64748b;
+}
+
+:root.dark {
+  --bg: #0f172a;
+  --fg: #f8fafc;
+  --surface: #111827;
+  --surface-hover: #1e293b;
+  --border: #1f2937;
+  --border-hover: #374151;
+  --muted: #1e293b;
+  --muted-fg: #94a3b8;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--fg);
+}
+
+/* Smooth theme transition for all elements */
+*, *::before, *::after {
+  transition-property: background-color, border-color, color, fill, stroke;
+  transition-duration: 300ms;
+  transition-timing-function: ease-in-out;
+}
+
+/* Tint browser-native date/time picker icons for dark backgrounds */
+.dark input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+  filter: invert(0.6) brightness(1.2);
+  cursor: pointer;
+}
+
+/* Remove number input spinners */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+/* Smooth focus-visible ring across interactive elements */
+:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* Scrollbar (webkit) */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--border-hover);
+}
