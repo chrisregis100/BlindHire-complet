@@ -6,6 +6,7 @@
  * Accepts explicit props to stay decoupled from context.
  */
 
+import { truncateAddress } from "@/lib/format";
 import { PrimaryButton } from "./primary-button";
 
 interface WalletConnectProps {
@@ -15,11 +16,6 @@ interface WalletConnectProps {
   error: string;
   connectWallet: () => Promise<void>;
   disconnectWallet: () => void;
-}
-
-function truncateAddress(address: string): string {
-  if (address.length < 14) return address;
-  return `${address.slice(0, 8)}...${address.slice(-6)}`;
 }
 
 export function WalletConnect({

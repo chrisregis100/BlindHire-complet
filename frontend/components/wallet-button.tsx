@@ -1,12 +1,8 @@
 "use client";
 
 import { useWallet } from "@/contexts/wallet-context";
+import { truncateAddress } from "@/lib/format";
 import { PrimaryButton } from "./primary-button";
-
-function truncateAddress(address: string): string {
-  if (address.length < 14) return address;
-  return `${address.slice(0, 6)}...${address.slice(-4)}`;
-}
 
 export function WalletButton() {
   const { isConnected, isConnecting, accountAddress, error, connectWallet, disconnectWallet } =

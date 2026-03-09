@@ -1,5 +1,6 @@
 import Link from "next/link";
 
+import { truncateAddress } from "@/lib/format";
 import { Profile } from "@/lib/types";
 
 interface ProfileBadgeProps {
@@ -7,11 +8,6 @@ interface ProfileBadgeProps {
   walletAddress: string;
   showRating?: boolean;
   size?: "sm" | "md";
-}
-
-function truncateAddress(address: string): string {
-  if (!address || address.length < 14) return address;
-  return `${address.slice(0, 10)}…${address.slice(-8)}`;
 }
 
 function StarIcon() {

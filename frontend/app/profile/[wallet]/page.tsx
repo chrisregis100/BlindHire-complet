@@ -7,11 +7,7 @@ import { PageContainer } from "@/components/page-container";
 import { PrimaryButton } from "@/components/primary-button";
 import { useWallet } from "@/contexts/wallet-context";
 import { useProfile } from "@/hooks/use-profile";
-
-function truncateAddress(address: string): string {
-  if (!address || address.length < 14) return address;
-  return `${address.slice(0, 10)}…${address.slice(-8)}`;
-}
+import { truncateAddress } from "@/lib/format";
 
 function StarIcon() {
   return (
