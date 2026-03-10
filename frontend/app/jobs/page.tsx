@@ -15,6 +15,7 @@ const FILTERS: { label: string; value: "all" | JobPhase }[] = [
   { label: "Bidding", value: "bidding" },
   { label: "Confirming", value: "confirming" },
   { label: "Finalized", value: "finalized" },
+  { label: "Expired", value: "expired" },
 ];
 
 export default function JobsPage() {
@@ -27,7 +28,7 @@ export default function JobsPage() {
   useEffect(() => {
     getJobs()
       .then((nextJobs) => {
-        setJobs(nextJobs);
+        setJobs([...nextJobs].sort((a, b) => b.jobId - a.jobId));
         setHasFetched(true);
       })
       .catch(() => setHasFetched(true));
@@ -35,12 +36,27 @@ export default function JobsPage() {
 
   const handleRefreshJobs = async () => {
     const nextJobs = await getJobs();
-    setJobs(nextJobs);
+    setJobs([...nextJobs].sort((a, b) => b.jobId - a.jobId));
   };
 
-  const filteredJobs = filter === "all"
-    ? jobs
-    : jobs.filter((job) => getJobPhase(job.commitDeadline, job.revealDeadline, job.finalized) === filter);
+  const visibleJobs =
+    filter === "expired"
+      ? jobs.filter(
+          (job) =>
+            getJobPhase(job.commitDeadline, job.revealDeadline, job.finalized) === "expired",
+        )
+      : jobs.filter(
+          (job) =>
+            getJobPhase(job.commitDeadline, job.revealDeadline, job.finalized) !== "expired",
+        );
+
+  const filteredJobs =
+    filter === "all" || filter === "expired"
+      ? visibleJobs
+      : visibleJobs.filter(
+          (job) =>
+            getJobPhase(job.commitDeadline, job.revealDeadline, job.finalized) === filter,
+        );
 
   return (
     <main className="mx-auto w-full max-w-6xl px-4 sm:px-6 py-8 sm:py-10">
@@ -120,12 +136,18 @@ export default function JobsPage() {
             </svg>
           </div>
           <p className="mb-1 text-base font-semibold text-foreground">
-            {filter === "all" ? "No jobs yet" : "No matching jobs"}
+            {filter === "all"
+              ? "No jobs yet"
+              : filter === "expired"
+                ? "No expired jobs"
+                : "No matching jobs"}
           </p>
           <p className="mb-5 text-sm text-muted-foreground">
             {filter === "all"
               ? "Post the first job to start an auction."
-              : "Try a different filter or post a new job."}
+              : filter === "expired"
+                ? "Jobs past the confirmation deadline without being finalized are hidden by default."
+                : "Try a different filter or post a new job."}
           </p>
           <PrimaryButton as={Link} href="/create-job" className="inline-flex">
             Post a Job
