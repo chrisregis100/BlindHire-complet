@@ -26,6 +26,7 @@ export default function JobDetailPage() {
   const { id } = useParams<{ id: string }>();
   const jobId = Number(id);
   const blindHire = useBlindHire();
+  const { getRevealedBids, getWinner } = blindHire;
   const autoReveal = useAutoRevealContext();
   const { addToast } = useToast();
 
@@ -58,8 +59,8 @@ export default function JobDetailPage() {
   const loadResults = useCallback(async () => {
     try {
       const [bids, w] = await Promise.all([
-        blindHire.getRevealedBids(jobId),
-        blindHire.getWinner(jobId),
+        getRevealedBids(jobId),
+        getWinner(jobId),
       ]);
       setRevealedBids(bids);
       setWinner(w);
@@ -67,7 +68,7 @@ export default function JobDetailPage() {
     } catch {
       // Silently fail — results may not be available yet
     }
-  }, [blindHire, jobId]);
+  }, [getRevealedBids, getWinner, jobId]);
 
   const phase = job ? getJobPhase(job.commitDeadline, job.revealDeadline, job.finalized) : null;
 
