@@ -35,14 +35,19 @@ export function ProfileBadge({
 }: ProfileBadgeProps) {
   if (!profile) {
     return (
-      <div className="flex items-center gap-3">
+      <Link
+        href={`/profile/${walletAddress}`}
+        className="flex items-center gap-3 rounded-lg p-1 -ml-1 transition-colors hover:bg-surface-hover"
+        aria-label="View profile"
+        tabIndex={0}
+      >
         <div
           className={`shrink-0 rounded-full bg-surface-hover ${size === "sm" ? "h-8 w-8" : "h-10 w-10"}`}
         />
         <p className="truncate font-mono text-xs text-muted-foreground">
           {truncateAddress(walletAddress)}
         </p>
-      </div>
+      </Link>
     );
   }
 
